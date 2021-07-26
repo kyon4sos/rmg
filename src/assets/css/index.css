@@ -1,0 +1,23 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+ul,
+li {
+  list-style: none;
+}
+.hover-bg:hover {
+  background: #7296f8;
+  color: #fff;
+}
+:root {
+  --bgColor: #000407ff;
+  --infoColor: #997cb8ff;
+  --primaryColor: #2b5eff;
+  --secondaryColor: #ff6b42;
+  --dangerColor: #ff2429;
+  --successColor: #28c129;
+  --hoverBgColor: #b6b6b6;
+}
+

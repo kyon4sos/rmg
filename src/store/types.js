@@ -1,0 +1,4 @@
+export const SET_SERVERS = "SET_SERVERS";
+export const SET_ACTIVE_SERVERS = "SET_ACTIVE_SERVERS";
+export const DEL_SERVERS = "DEL_SERVERS";
+export const EDIT_SERVERS = "EDIT_SERVERS";

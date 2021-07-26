@@ -1,0 +1,62 @@
+import Vue from "vue";
+import {
+  ButtonGroup,
+  Button,
+  Container,
+  Header,
+  Main,
+  Aside,
+  Dialog,
+  Input,
+  InputNumber,
+  autocomplete,
+  Select,
+  Form,
+  Drawer,
+  FormItem,
+  Tooltip,
+  Switch,
+  InfiniteScroll,
+  Message,
+  Loading,
+  MessageBox,
+  Table,
+  TableColumn,
+  Row,
+  Col,
+} from "element-ui";
+import { NIcon, NModel, NDrawer } from "@/components/index";
+import VTooltip from "v-tooltip";
+import VueClipboard from "vue-clipboard2";
+Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox.confirm;
+const components = [
+  Row,
+  Col,
+  TableColumn,
+  Table,
+  Loading,
+  ButtonGroup,
+  InfiniteScroll,
+  Switch,
+  Tooltip,
+  FormItem,
+  Form,
+  Drawer,
+  Button,
+  Container,
+  Header,
+  Main,
+  Aside,
+  Dialog,
+  Input,
+  InputNumber,
+  autocomplete,
+  Select,
+  NIcon,
+  NModel,
+  NDrawer,
+  VTooltip,
+  VueClipboard,
+];
+components.forEach((c) => Vue.use(c));
