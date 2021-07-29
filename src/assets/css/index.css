@@ -21,3 +21,13 @@ li {
   --hoverBgColor: #b6b6b6;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #3e59f1;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+}

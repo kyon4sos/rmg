@@ -1,18 +1,14 @@
 <template>
   <div class="default-layout">
     <el-container>
-      <el-aside width="54px">
+      <el-aside width="44px">
         <server></server>
       </el-aside>
       <el-container direction="vertical">
-        <AppMenu />
-        <!-- <el-header height="22px">
-          <i class="icon close"></i>
-          <i class="icon max-size"></i>
-          <i class="icon mini-size"></i>
-        </el-header> -->
-        <!-- <n-header></n-header> -->
-        <el-main><router-view></router-view></el-main>
+        <AppHeader />
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -20,11 +16,11 @@
 
 <script>
 import Server from "@/components/server";
-import AppMenu from "@/components/app-menu/AppMenu.vue";
+import AppHeader from "@/components/app-header/AppHeader.vue";
 export default {
   components: {
     Server,
-    AppMenu,
+    AppHeader,
   },
   methods: {},
 };
@@ -32,12 +28,16 @@ export default {
 
 <style lang="scss">
 .default-layout {
+  overflow-x: hidden;
   .el-header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     // background-color: black;
+  }
+  .el-main {
+    min-width: 600px;
   }
   .el-aside {
     height: 100vh;

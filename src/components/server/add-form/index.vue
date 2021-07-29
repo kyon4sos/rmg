@@ -38,10 +38,10 @@
 
 <script>
 import { Notification } from "element-ui";
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import { getUniqueId } from "@/utils";
 import newRedis from "@/redis";
-import { SET_SERVERS, EDIT_SERVERS } from "@/store/types";
+import { SET_SERVERS, EDIT_SERVERS, SET_CONFIG } from "@/store/types";
 export default {
   props: {
     editId: {
@@ -55,11 +55,12 @@ export default {
       form: { id: "", name: "测试", host: "127.0.0.1", port: 6379, db: [] },
       redis: null,
       loading: false,
+      store: null,
     };
   },
   computed: {
     ...mapState({
-      servers: (state) => state.servers,
+      servers: (state) => state.app.servers,
     }),
     title() {
       return this.editId ? "编辑" : "新增";
@@ -75,36 +76,35 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      setServer: SET_SERVERS,
-      editeServer: EDIT_SERVERS,
-    }),
+    // ...mapMutations({
+    //   setServer: SET_SERVERS,
+    //   editeServer: EDIT_SERVERS,
+    // }),
+    ...mapActions("app", [SET_CONFIG]),
     handleAdd() {
       this.modelAddVisible = true;
-      console.log("add", this.editId);
     },
     handleSubmit() {
       this.modelAddVisible = false;
       this.disconnect();
-      if (!this.editId) {
+      this.form.id;
+      if (!this.form.id) {
         this.form.id = getUniqueId();
-        this.setServer(JSON.parse(JSON.stringify(this.form)));
-        return false;
       }
-      this.editeServer(this.form);
-      this.$emit("update:editId", null);
+      this.SET_CONFIG(JSON.parse(JSON.stringify(this.form)));
+      this.form.id = null;
     },
     handleCancel() {
       this.modelAddVisible = false;
       if (this.editId) {
         this.$emit("update:editId", null);
       }
-      console.log("update:editId", this.editId);
       this.disconnect();
     },
     disconnect() {
       this.redis && this.redis.disconnect();
     },
+    saveStorage() {},
     async handleTest() {
       this.loading = true;
       try {
@@ -113,15 +113,6 @@ export default {
           port: this.form.port,
           password: this.form.password,
         });
-        // this.redis.on("error", () => {
-        //   this.redis.quit();
-        // });
-        // this.redis.on("connect", () => {
-        //   Notification.success({
-        //     title: "成功",
-        //     message: "链接成功",
-        //   });
-        // });
         await this.redis.connect();
       } catch (e) {
         Notification.error({
@@ -135,6 +126,7 @@ export default {
       }
     },
   },
+  created() {},
   beforeDestroy() {
     this.disconnect();
   },

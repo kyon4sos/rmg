@@ -15,7 +15,6 @@ export default {
   methods: {
     handleClick(e) {
       const ops = e.target.dataset.ops || "none";
-      console.log(ops);
       ipcRenderer.send(ops);
     },
   },

@@ -1,11 +1,6 @@
 <template>
   <div class="server-wrap">
     <n-icon @click="handleSelectServer" icon="el-icon-menu"></n-icon>
-    <!-- <ul class="active-server" v-if="activeServer.id">
-      <li>{{ activeServer.name }}</li>
-      <li>{{ activeServer.host }}</li>
-      <li>{{ activeServer.port }}</li>
-    </ul> -->
     <n-icon icon="el-icon-switch-button"></n-icon>
     <n-drawer
       :visible.sync="drawer"
@@ -52,7 +47,7 @@
                 placement="top-start"
               >
                 <el-switch
-                  v-model="s.conn"
+                  :value="s.conn"
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   @change="handleSwitchChange(s.id)"
@@ -72,8 +67,8 @@
 
 <script>
 import AddForm from "./add-form";
-import { mapMutations, mapState } from "vuex";
-import { SET_ACTIVE_SERVERS, DEL_SERVERS } from "@/store/types";
+import { mapActions, mapMutations, mapState } from "vuex";
+import { DEL_CONFIG, SET_ACTIVE_SERVER, INIT } from "@/store/types";
 export default {
   components: {
     AddForm,
@@ -89,28 +84,24 @@ export default {
   },
   computed: {
     ...mapState({
-      servers: (state) => state.servers,
-      activeServer: (state) => state.activeServer,
+      servers: (state) => state.app.servers,
+      activeServer: (state) => state.app.activeServer,
     }),
   },
   methods: {
-    ...mapMutations({
-      setActiveSer: SET_ACTIVE_SERVERS,
-      delServer: DEL_SERVERS,
-    }),
+    ...mapMutations("app", [SET_ACTIVE_SERVER]),
+    ...mapActions("app", [DEL_CONFIG, INIT]),
     handleSelectServer() {
       this.drawer = true;
     },
     handleSwitchChange(id) {
-      this.setActiveSer(id);
-      this.drawer = false;
+      this.INIT(id);
     },
     handleEdit(id) {
-      console.log("id", id);
       this.editId = id;
     },
     handleDel(id) {
-      this.delServer(id);
+      this.DEL_CONFIG(id);
     },
   },
 };

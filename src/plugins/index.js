@@ -24,13 +24,24 @@ import {
   TableColumn,
   Row,
   Col,
+  Tree,
+  dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Popover,
 } from "element-ui";
 import { NIcon, NModel, NDrawer } from "@/components/index";
 import VTooltip from "v-tooltip";
 import VueClipboard from "vue-clipboard2";
 Vue.prototype.$message = Message;
+Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$confirm = MessageBox.confirm;
 const components = [
+  Popover,
+  dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Tree,
   Row,
   Col,
   TableColumn,

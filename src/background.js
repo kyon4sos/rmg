@@ -1,9 +1,15 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, ipcMain } from "electron";
+import { app, protocol, BrowserWindow, ipcMain, session } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
+import Store from "electron-store";
+const path = require("path");
+const devtool = path.join(__dirname, "../devtool/5.3.3_0");
+
 const isDevelopment = process.env.NODE_ENV !== "production";
+console.log({ isDevelopment });
+Store.initRenderer();
 let win = null;
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -13,7 +19,7 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     frame: false,
     webPreferences: {
@@ -30,8 +36,10 @@ async function createWindow() {
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
+
     // Load the index.html when not in development
     win.loadURL("app://./index.html");
+    win.webContents.openDevTools();
   }
   win.setMenu(null);
   return win;
@@ -60,6 +68,8 @@ app.on("ready", async () => {
     // Install Vue Devtools
     try {
       // await installExtension(VUEJS_DEVTOOLS);
+      console.log("devtool", devtool);
+      await session.defaultSession.loadExtension(devtool);
     } catch (e) {
       console.error("Vue Devtools failed to install:", e.toString());
     }
@@ -75,7 +85,6 @@ ipcMain.on("app-max", (event, arg) => {
   }
 });
 ipcMain.on("app-mini", (event, arg) => {
-  console.log(win);
   if (!win.isMinimized()) {
     win.minimize();
   }
