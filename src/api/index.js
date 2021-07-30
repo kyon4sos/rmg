@@ -52,6 +52,9 @@ const initRedis = ({
   return redis;
 };
 
+const selectDb = (db) => {
+  return redis.select(db);
+};
 const getAllKeys = () => {
   return redis.keys("*");
 };
@@ -207,4 +210,5 @@ export {
   delField,
   delKey,
   keyExists,
+  selectDb,
 };

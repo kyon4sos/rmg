@@ -1,5 +1,5 @@
 <template>
-  <div class="data-wrap">
+  <div class="redis-data">
     <KeyPane />
     <ValuePane />
   </div>
@@ -14,10 +14,10 @@ export default {
 </script>
 
 <style>
-.data-wrap {
-  flex-shrink: 0;
+.redis-data {
+  width: 100%;
+  position: relative;
   height: calc(100vh - 76px - 40px);
-  display: flex;
   border: 1px solid #c7c7c7;
   border-radius: 6px;
   overflow: hidden;

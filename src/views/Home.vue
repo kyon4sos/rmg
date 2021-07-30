@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ToolBar from "@/components/toolbar";
+import ToolBar from "@/components/tool-bar";
 import RedisData from "@/components/redis-data";
 export default {
   name: "Home",
@@ -16,6 +16,7 @@ export default {
 </script>
 <style lang="scss">
 .home {
+  width: 100%;
   // padding-right: 16px;
   height: calc(100vh - 76px);
 }

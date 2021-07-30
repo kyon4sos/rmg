@@ -1,6 +1,6 @@
 <template>
-  <el-row>
-    <el-col :span="24">
+  <el-row class="property-pane mb-8">
+    <el-col :span="24" class="min-width">
       <n-table
         :data="tableData"
         :columns="columns"

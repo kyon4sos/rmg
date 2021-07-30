@@ -3,6 +3,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+html,
+body {
+  width: 100%;
+}
 ul,
 li {
   list-style: none;
@@ -30,4 +34,15 @@ li {
   border-radius: 5px;
 }
 ::-webkit-scrollbar-track {
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+.float-right {
+  float: right;
+}
+
+.min-width {
+  min-width: 630px;
 }

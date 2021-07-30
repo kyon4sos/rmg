@@ -40,11 +40,12 @@ export default {
 
 <style lang="scss">
 .key-container {
-  min-width: 240px;
+  width: 240px;
   height: 100%;
   border-right: 1px solid #c7c7c7;
   .key-item {
     padding: 4px 8px;
   }
+  position: absolute;
 }
 </style>

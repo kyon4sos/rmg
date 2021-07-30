@@ -73,6 +73,7 @@ export default {
   watch: {},
   computed: {
     ...mapState({
+      redis: (state) => state.redis.redis,
       valueType: (state) => state.redis.valueType,
       editorVal: (state) => state.redis.editorVal,
       value: (state) => state.redis.value,
@@ -90,6 +91,9 @@ export default {
       this.SET_EDITOR_VALUE({ ...this.editorVal, value });
     },
     handleCmBlur(val) {
+      if (!this.redis) {
+        return;
+      }
       this.$confirm("内容已经修改，是否保存?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -112,7 +116,7 @@ export default {
 
 <style lang="scss">
 .vue-codemirror {
-  height: 100%;
+  height: 100vh;
   .CodeMirror {
     height: 100%;
     font-family: auto;

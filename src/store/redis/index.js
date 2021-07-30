@@ -18,12 +18,16 @@ import {
   KEY_EXIST,
   SET_INIT,
   SET_DISABLE,
+  SELECT_DB,
+  SET_ACTIVE_DB,
 } from "../types";
 import { getAllKeys, getValue, toArray, save, delKey, keyExists } from "@/api";
+import { selectDb } from "../../api";
 
 const state = () => ({
   connected: false,
   redis: null,
+  activeDb: 0,
   searchKey: "",
   curKey: "",
   valueType: "",
@@ -32,7 +36,7 @@ const state = () => ({
   keys: [],
   loading: false,
   disableSave: true,
-  // editValue: "",
+
   tableData: [],
 });
 const getters = {
@@ -45,8 +49,10 @@ const mutations = {
     const redis = initRedis(config);
     state.redis = Object.assign({}, redis);
   },
+  [SET_ACTIVE_DB](state, db) {
+    state.activeDb = db;
+  },
   [SET_KEYS](state, keys) {
-    
     state.keys = [...keys];
   },
   [SET_CURKEY](state, curKey) {
@@ -104,8 +110,6 @@ const actions = {
   },
   async [SET_TTL]({ state }, time) {
     const res = await state.redis.expire(state.curKey, time);
-   
-
   },
   async [KEY_EXIST]({ dispatch }, key) {
     const res = await keyExists(key);
@@ -117,9 +121,23 @@ const actions = {
     dispatch("message", res);
     state.loading = false;
   },
+  async [SELECT_DB]({ commit, dispatch, state }, db) {
+    this.loading = true;
+    const res = await selectDb(db);
+    dispatch(GET_ALL_KEYS);
+    commit(SET_ACTIVE_DB, db);
+    dispatch("message", res);
+    state.loading = false;
+  },
   message({ commit }, res) {
     console.log("message", res, typeof res);
-    Message(handleMap[res]);
+    Message.closeAll();
+    Message({
+      duration: 1500,
+      showClose: true,
+      offset: 100,
+      ...handleMap[res],
+    });
   },
 };
 const handleMap = {

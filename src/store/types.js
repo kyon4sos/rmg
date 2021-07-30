@@ -25,4 +25,6 @@ export const SET_VALUE = "SET_VALUE";
 export const SET_EDITOR_VALUE = "SET_EDITOR_VALUE";
 export const SET_VALUETYPE = "SET_VALUETYPE";
 export const SET_COLUMNS = "SET_COLUMNS";
-export const KEY_EXIST = "KEY_EXIST ";
+export const KEY_EXIST = "KEY_EXIST";
+export const SELECT_DB = "SELECT_DB";
+export const SET_ACTIVE_DB = "SET_ACTIVE_DB";

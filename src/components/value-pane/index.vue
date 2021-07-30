@@ -1,9 +1,9 @@
 <template>
-  <div class="value-container">
+  <el-row class="value-container">
     <ToolPane />
     <PropertyPane />
     <CodeEditor />
-  </div>
+  </el-row>
 </template>
 
 <script>
@@ -18,12 +18,8 @@ export default {
 <style lang="scss">
 .value-container {
   padding: 8px;
-  flex-grow: 1;
-  flex-shrink: 0;
-  overflow: auto;
-  .el-row {
-    margin-bottom: 16px;
-  }
+  min-width: 440px;
+  margin-left: 240px;
   .codemirror {
     height: 100%;
     .el-col {

@@ -29,6 +29,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Popover,
+  Option,
 } from "element-ui";
 import { NIcon, NModel, NDrawer } from "@/components/index";
 import VTooltip from "v-tooltip";
@@ -42,6 +43,7 @@ const components = [
   DropdownMenu,
   DropdownItem,
   Tree,
+  Option,
   Row,
   Col,
   TableColumn,
