@@ -3,14 +3,14 @@
     <el-col :span="5">
       <el-autocomplete
         :disabled="disRefresh"
-        :value="searchKey"
+        v-model="searchKey"
         size="small"
         placeholder="请输入key"
         clearable
         :trigger-on-focus="false"
         prefix-icon="el-icon-search"
         @select="handleSelectSugg"
-        :fetch-suggestions="querySearch"
+        :fetch-suggestions="handleQuery"
       ></el-autocomplete>
     </el-col>
     <el-col :span="3">
@@ -80,16 +80,17 @@ import {
   GET_VALUE,
   SELECT_DB,
 } from "@/store/types";
+import { keys } from "@/api";
 export default {
   data() {
     return {
+      searchKey: "",
       dropdowns: ["string", "hash", "list", "zset", "set"],
     };
   },
   computed: {
     ...mapState({
       redis: (state) => state.redis.redis,
-      searchKey: (state) => state.redis.searchKey,
       value: (state) => state.redis.value,
       activeDb: (state) => state.redis.activeDb,
     }),
@@ -111,9 +112,9 @@ export default {
     handleChangeDb(val) {
       this.SELECT_DB(val);
     },
-    async querySearch(query, cb) {
+    async handleQuery(query, cb) {
       if (query) {
-        let res = await this.redis.keys(`*${query}*`);
+        let res = await keys(`*${query}*`);
         res = res.map((k) => ({
           value: k,
         }));

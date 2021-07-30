@@ -124,6 +124,11 @@ const delField = async (key, { field, value }) => {
   console.log(res);
   return res;
 };
+const expire = (key, ttl) => {
+  const res = redis.expire(key, ttl);
+  console.log(res);
+  return res;
+};
 const delKey = async (key) => {
   const type = await getKeyType(key);
   let res = null;
@@ -153,6 +158,9 @@ const delKey = async (key) => {
 };
 const keyExists = (key) => {
   return redis.exists(key);
+};
+const keys = (key) => {
+  return redis.keys(`*${key}`);
 };
 const getValue = async (key) => {
   const type = await redis.type(key);
@@ -211,4 +219,6 @@ export {
   delKey,
   keyExists,
   selectDb,
+  keys,
+  expire,
 };

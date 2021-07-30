@@ -40,7 +40,7 @@
 import { Notification } from "element-ui";
 import { mapActions, mapMutations, mapState } from "vuex";
 import { getUniqueId } from "@/utils";
-import newRedis from "@/redis";
+import { initRedis } from "@/api";
 import { SET_SERVERS, EDIT_SERVERS, SET_CONFIG } from "@/store/types";
 export default {
   props: {
@@ -76,10 +76,6 @@ export default {
     },
   },
   methods: {
-    // ...mapMutations({
-    //   setServer: SET_SERVERS,
-    //   editeServer: EDIT_SERVERS,
-    // }),
     ...mapActions("app", [SET_CONFIG]),
     handleAdd() {
       this.modelAddVisible = true;
@@ -108,7 +104,7 @@ export default {
     async handleTest() {
       this.loading = true;
       try {
-        this.redis = newRedis({
+        this.redis = initRedis({
           host: this.form.host,
           port: this.form.port,
           password: this.form.password,

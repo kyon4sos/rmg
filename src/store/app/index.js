@@ -10,18 +10,15 @@ import {
   GET_CONFIG,
   SET_CONFIG,
   DEL_CONFIG,
-  SET_REDIS,
   INIT,
 } from "../types";
 const localStore = new LocalStore();
-
 const state = () => ({
   activeServer: {
     id: "",
     name: "",
     host: "",
     port: 0,
-    db: [],
   },
   servers: [],
 });
@@ -60,8 +57,10 @@ const actions = {
 
     commit(SET_SERVERS_CONFIG, servers);
   },
-  async [SET_CONFIG]({ dispatch, commit, state }, payload) {
+  async [SET_CONFIG]({ dispatch, state }, payload) {
     const servers = [...state.servers];
+
+    servers.forEach((s) => (s.conn = false));
     const idx = servers.findIndex((s) => s.id == payload.id);
     if (idx >= 0) {
       servers.splice(idx, 1, payload);

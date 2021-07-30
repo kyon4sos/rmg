@@ -45,7 +45,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import { DEL_KEY } from "@/store/types";
+import { DEL_KEY, SET_TTL } from "@/store/types";
 export default {
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("redis", [DEL_KEY]),
+    ...mapActions("redis", [DEL_KEY, SET_TTL]),
     handleEditKey() {},
     handleDelKey() {
       this.DEL_KEY();
@@ -81,7 +81,7 @@ export default {
         inputErrorMessage: "不是有效数字",
       })
         .then(({ value }) => {
-          this.setTTL(value);
+          this.SET_TTL(value);
         })
         .catch(() => {});
     },

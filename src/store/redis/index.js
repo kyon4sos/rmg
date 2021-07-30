@@ -1,7 +1,5 @@
-// const Redis = require("ioredis");
-import { initRedis } from "@/api";
 import { Message } from "element-ui";
-import Vue from "vue";
+
 import {
   SET_TTL,
   DEL_KEY,
@@ -20,9 +18,20 @@ import {
   SET_DISABLE,
   SELECT_DB,
   SET_ACTIVE_DB,
+  GET_KEY,
 } from "../types";
-import { getAllKeys, getValue, toArray, save, delKey, keyExists } from "@/api";
-import { selectDb } from "../../api";
+import {
+  getAllKeys,
+  getValue,
+  toArray,
+  save,
+  delKey,
+  keyExists,
+  keys,
+  selectDb,
+  expire,
+  initRedis,
+} from "@/api";
 
 const state = () => ({
   connected: false,
@@ -36,7 +45,6 @@ const state = () => ({
   keys: [],
   loading: false,
   disableSave: true,
-
   tableData: [],
 });
 const getters = {
@@ -108,16 +116,24 @@ const actions = {
     state.loading = false;
     dispatch("message", res);
   },
-  async [SET_TTL]({ state }, time) {
-    const res = await state.redis.expire(state.curKey, time);
+  async [SET_TTL]({ state, dispatch }, time) {
+    const res = await expire(state.curKey, time);
+    dispatch("message", res);
   },
   async [KEY_EXIST]({ dispatch }, key) {
     const res = await keyExists(key);
     dispatch("message", res);
   },
-  async [DEL_KEY]({ dispatch, state }) {
+  async [DEL_KEY]({ dispatch, commit, state }) {
     this.loading = true;
     const res = await delKey(state.curKey);
+    dispatch("message", res);
+    commit(SET_INIT);
+    state.loading = false;
+  },
+  async [GET_KEY]({ dispatch, state }) {
+    this.loading = true;
+    const res = await keys(state.curKey);
     dispatch("message", res);
     state.loading = false;
   },
