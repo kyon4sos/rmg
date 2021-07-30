@@ -15,14 +15,14 @@
                 @click="handleValEdit(scope.$index, scope.row)"
               ></el-button>
             </el-tooltip>
-            <el-tooltip placement="top" content="保存">
+            <!-- <el-tooltip placement="top" content="保存">
               <el-button
                 size="mini"
                 type="primary"
-                icon="el-icon-delete"
+                icon="el-icon-document-checked"
                 @click="handleValDelete(scope.$index, scope.row)"
               ></el-button>
-            </el-tooltip>
+            </el-tooltip> -->
             <el-tooltip placement="top" content="删除">
               <el-button
                 size="mini"

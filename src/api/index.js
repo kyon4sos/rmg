@@ -24,7 +24,8 @@ const initRedis = ({
   });
   redis.on("error", (e) => {
     console.log("error", e);
-    if (err == 0) {
+    err++;
+    if (err == 1) {
       Message({
         type: "error",
         message: "连接错误,正在重试 !" + e,
@@ -58,9 +59,11 @@ const selectDb = (db) => {
 const getAllKeys = () => {
   return redis.keys("*");
 };
-const save = async (key, { field, value }) => {
-  console.log("save", field, value);
-  const type = await getKeyType(key);
+const renameKey = (oldKey, newkey) => {
+  return redis.rename(oldKey, newkey);
+};
+const create = async (key, type, { field, value }) => {
+  console.log(key, type, { field, value });
   let res = null;
   switch (type) {
     case "string":
@@ -71,6 +74,31 @@ const save = async (key, { field, value }) => {
       break;
     case "list":
       res = await redis.lset(key, field, value);
+      break;
+    case "set":
+      res = await redis.smembers(key);
+      break;
+    case "zset":
+      res = await redis.zrange(key, 0, -1);
+      break;
+    default:
+      break;
+  }
+  console.log(res);
+  return res;
+};
+const update = async (key, type, { index, field, value }) => {
+  console.log("UPDATE_VALUE", key, type, { field, value });
+  let res = null;
+  switch (type) {
+    case "string":
+      res = await redis.set(key, value);
+      break;
+    case "hash":
+      res = await redis.hset(key, field, value);
+      break;
+    case "list":
+      res = await redis.lset(key, index, value);
       break;
     case "set":
       res = await redis.smembers(key);
@@ -97,7 +125,7 @@ const getKeyType = async (key) => {
   console.log(type);
   return type;
 };
-const delField = async (key, { field, value }) => {
+const delField = async (key, { index, field, value }) => {
   const type = await getKeyType(key);
   let res = null;
   switch (type) {
@@ -110,7 +138,7 @@ const delField = async (key, { field, value }) => {
       res = await redis.hdel(key, field, value);
       break;
     case "list":
-      res = await redis.lset(key, field, value);
+      res = await redis.lset(key, index, value);
       break;
     case "set":
       res = await redis.smembers(key);
@@ -194,13 +222,15 @@ const toArray = (res) => {
       value: res,
     };
   }
-  if (res instanceof Array)
-    return res.map((r, index) => ({
-      field: index,
-      value: r.value || r,
-    }));
+  // if (res instanceof Array)
+  //   return res.map((r, index) => ({
+  //     index: idx,
+  //     field: index,
+  //     value: r.value || r,
+  //   }));
   if (res instanceof Object) {
-    return Object.keys(res).map((r) => ({
+    return Object.keys(res).map((r, idx) => ({
+      index: idx,
       field: r,
       value: res[r],
     }));
@@ -214,11 +244,13 @@ export {
   getValue,
   toArray,
   getKeyType,
-  save,
+  update,
   delField,
   delKey,
   keyExists,
   selectDb,
   keys,
   expire,
+  renameKey,
+  create,
 };

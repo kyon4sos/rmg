@@ -47,11 +47,17 @@ import { mapActions, mapMutations, mapState } from "vuex";
 // window.DIFF_DELETE = -1;
 // window.DIFF_INSERT = 1;
 // window.DIFF_EQUAL = 0;
-import { SET_VALUE, SET_EDITOR_VALUE, SAVE_KEY } from "@/store/types";
+import {
+  SET_VALUE,
+  SET_EDITOR_VALUE,
+  UPDATE_VALUE,
+  GET_VALUE,
+} from "@/store/types";
 export default {
   components: { codemirror },
   data() {
     return {
+      tmp: null,
       cmOptions: {
         tabSize: 4,
         mode: "javascript",
@@ -70,13 +76,18 @@ export default {
       },
     };
   },
-  watch: {},
+  watch: {
+    curKey() {
+      this.tmp = null;
+    },
+  },
+  mounted() {},
   computed: {
     ...mapState({
       redis: (state) => state.redis.redis,
       valueType: (state) => state.redis.valueType,
       editorVal: (state) => state.redis.editorVal,
-      value: (state) => state.redis.value,
+      curKey: (state) => state.redis.curKey,
     }),
     codemirror() {
       return this.$refs.myCm.codemirror;
@@ -84,14 +95,35 @@ export default {
   },
   methods: {
     ...mapMutations("redis", [SET_VALUE, SET_EDITOR_VALUE]),
-    ...mapActions("redis", [SAVE_KEY]),
+    ...mapActions("redis", [UPDATE_VALUE, GET_VALUE]),
     handleCmReady(cm) {},
-    handleCmFocus(cm) {},
+    handleCmFocus(cm) {
+      if (!this.tmp) {
+        this.tmp = { ...this.editorVal };
+      }
+    },
     handleCmCodeChange(value) {
-      this.SET_EDITOR_VALUE({ ...this.editorVal, value });
+      if (!this.tmp) {
+        this.tmp = { ...this.editorVal };
+      }
+      this.SET_EDITOR_VALUE({ value });
+      console.log(this.tmp);
     },
     handleCmBlur(val) {
+      // console.log(val);
       if (!this.redis) {
+        return;
+      }
+      console.log("handleCmBlur", this.tmp, this.editorVal);
+      console.log(
+        "handleCmBlur",
+        JSON.stringify(this.tmp) == JSON.stringify(this.editorVal)
+      );
+      if (!this.curKey) {
+        return;
+      }
+      const f = JSON.stringify(this.tmp) == JSON.stringify(this.editorVal);
+      if (f || !this.tmp) {
         return;
       }
       this.$confirm("内容已经修改，是否保存?", "提示", {
@@ -100,14 +132,18 @@ export default {
         type: "warning",
       })
         .then(() => {
-          // this.$emit("save", this.value);
-          this.SAVE_KEY();
+          this.UPDATE_VALUE();
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消保存",
           });
+          this.SET_EDITOR_VALUE(this.tmp);
+        })
+        .finally(() => {
+          console.log("finall");
+          this.tmp = null;
         });
     },
   },

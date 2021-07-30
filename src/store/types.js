@@ -20,6 +20,7 @@ export const GET_VALUE = "GET_VALUE";
 export const GET_CONFIG = "GET_CONFIG";
 export const GET_KEY = "GET_KEY";
 export const EDIT_SERVERS = "EDIT_SERVERS";
+export const UPDATE_VALUE = "UPDATE_VALUE";
 
 export const DEL_SERVERS = "DEL_SERVERS";
 export const DEL_CONFIG = "DEL_CONFIG";
@@ -28,6 +29,8 @@ export const DEL_KEY = "DEL_KEY";
 export const INIT = "INIT";
 export const SET_CLEAR = "SET_CLEAR";
 export const SAVE_KEY = "SAVE_KEY";
+export const CREATE_KEY = "CREATE_KEY";
+export const RENAME_KEY = "RENAME_KEY";
 
 export const KEY_EXIST = "KEY_EXIST";
 export const SELECT_DB = "SELECT_DB";
