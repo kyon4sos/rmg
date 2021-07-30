@@ -75,10 +75,10 @@ import {
   GET_ALL_KEYS,
   SET_VALUETYPE,
   SET_DISABLE,
-  SET_INIT,
   SET_CURKEY,
   GET_VALUE,
   SELECT_DB,
+  SET_CLEAR,
 } from "@/store/types";
 import { keys } from "@/api";
 export default {
@@ -106,8 +106,8 @@ export default {
     ...mapMutations("redis", [
       SET_VALUETYPE,
       SET_DISABLE,
-      SET_INIT,
       SET_CURKEY,
+      SET_CLEAR,
     ]),
     handleChangeDb(val) {
       this.SELECT_DB(val);
@@ -128,7 +128,7 @@ export default {
     handleCommand(command) {
       this.SET_VALUETYPE(command);
       this.SET_DISABLE(false);
-      this.SET_INIT();
+      this.SET_CLEAR();
     },
     handleRefresh() {
       this.GET_ALL_KEYS();

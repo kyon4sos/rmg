@@ -1,4 +1,4 @@
-import { Message } from "element-ui";
+import { Message } from 'element-ui';
 
 import {
   SET_TTL,
@@ -14,12 +14,13 @@ import {
   SET_CURKEY,
   SET_EDITOR_VALUE,
   KEY_EXIST,
-  SET_INIT,
+  SET_CLEAR,
   SET_DISABLE,
   SELECT_DB,
   SET_ACTIVE_DB,
   GET_KEY,
-} from "../types";
+  INIT_REDIS,
+} from '../types';
 import {
   getAllKeys,
   getValue,
@@ -31,17 +32,17 @@ import {
   selectDb,
   expire,
   initRedis,
-} from "@/api";
+} from '@/api';
 
 const state = () => ({
   connected: false,
   redis: null,
   activeDb: 0,
-  searchKey: "",
-  curKey: "",
-  valueType: "",
-  value: { index: 0, value: "" },
-  editorVal: { value: "hello world", field: "", index: 0 },
+  searchKey: '',
+  curKey: '',
+  valueType: '',
+  value: { index: 0, value: '' },
+  editorVal: { value: 'hello world', field: '', index: 0 },
   keys: [],
   loading: false,
   disableSave: true,
@@ -81,10 +82,10 @@ const mutations = {
   [SET_DISABLE](state, data) {
     state.disableSave = data;
   },
-  [SET_INIT](state) {
-    state.curKey = "";
-    state.value = "";
-    state.editorVal = { value: "" };
+  [SET_CLEAR](state) {
+    state.curKey = '';
+    state.value = '';
+    state.editorVal = { value: '' };
   },
 };
 const actions = {
@@ -95,11 +96,11 @@ const actions = {
     commit(SET_CURKEY, key);
     commit(SET_TABLE, toArray(value));
     switch (type) {
-      case "string":
+      case 'string':
         commit(SET_EDITOR_VALUE, { value: value });
         break;
       default:
-        commit(SET_EDITOR_VALUE, { value: "" });
+        commit(SET_EDITOR_VALUE, { value: '' });
         break;
     }
   },
@@ -107,46 +108,46 @@ const actions = {
     if (state.redis == null) {
       return;
     }
-    const res = await getAllKeys("*");
+    const res = await getAllKeys('*');
     commit(SET_KEYS, res);
   },
   async [SAVE_KEY]({ state, dispatch }) {
     state.loading = true;
     const res = await save(state.curKey, state.editorVal);
     state.loading = false;
-    dispatch("message", res);
+    dispatch('message', res);
   },
   async [SET_TTL]({ state, dispatch }, time) {
     const res = await expire(state.curKey, time);
-    dispatch("message", res);
+    dispatch('message', res);
   },
   async [KEY_EXIST]({ dispatch }, key) {
     const res = await keyExists(key);
-    dispatch("message", res);
+    dispatch('message', res);
   },
   async [DEL_KEY]({ dispatch, commit, state }) {
     this.loading = true;
     const res = await delKey(state.curKey);
-    dispatch("message", res);
-    commit(SET_INIT);
+    dispatch('message', res);
+    commit(SET_CLEAR);
     state.loading = false;
   },
   async [GET_KEY]({ dispatch, state }) {
     this.loading = true;
     const res = await keys(state.curKey);
-    dispatch("message", res);
+    dispatch('message', res);
     state.loading = false;
   },
+
   async [SELECT_DB]({ commit, dispatch, state }, db) {
     this.loading = true;
     const res = await selectDb(db);
     dispatch(GET_ALL_KEYS);
     commit(SET_ACTIVE_DB, db);
-    dispatch("message", res);
+    dispatch('message', res);
     state.loading = false;
   },
   message({ commit }, res) {
-    console.log("message", res, typeof res);
     Message.closeAll();
     Message({
       duration: 1500,
@@ -157,9 +158,9 @@ const actions = {
   },
 };
 const handleMap = {
-  1: { message: "ok", type: "success" },
-  OK: { message: "ok", type: "success" },
-  null: { message: "error", type: "error" },
+  1: { message: 'ok', type: 'success' },
+  OK: { message: 'ok', type: 'success' },
+  null: { message: 'error', type: 'error' },
 };
 export default {
   namespaced: true,

@@ -1,24 +1,13 @@
-# rmg
+# Redis Manager GUI
 
-## Project setup
-```
-yarn install
-```
++ vue  vuex  element-ui electron 
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+<img src="http://qw5zaufiu.hn-bkt.clouddn.com/Snipaste_2021-07-30_13-28-03.png" style="zoom:33%;" />
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<img src="http://qw5zaufiu.hn-bkt.clouddn.com/Snipaste_2021-07-30_13-27-43.png" style="zoom:33%;" />
+
+
+
+<img src="http://qw5zaufiu.hn-bkt.clouddn.com/Snipaste_2021-07-30_13-27-03.png" style="zoom:33%;" />
