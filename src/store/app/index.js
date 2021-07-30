@@ -25,11 +25,7 @@ const state = () => ({
   },
   servers: [],
 });
-const getters = {
-  redis: (state, getters, rootState) => {
-    return rootState.redis.redis;
-  },
-};
+const getters = {};
 const mutations = {
   [SET_SERVERS](state, payload) {
     state.servers.push(payload);
@@ -61,7 +57,7 @@ const actions = {
   },
   async [GET_CONFIG]({ commit }) {
     const servers = localStore.get(CONFIG_SERVERS);
-   
+
     commit(SET_SERVERS_CONFIG, servers);
   },
   async [SET_CONFIG]({ dispatch, commit, state }, payload) {

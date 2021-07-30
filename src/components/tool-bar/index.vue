@@ -1,6 +1,6 @@
 <template>
   <el-row class="tool-bar mb-8" :gutter="4">
-    <el-col :span="6">
+    <el-col :span="5">
       <el-autocomplete
         :disabled="disRefresh"
         :value="searchKey"
@@ -13,7 +13,7 @@
         :fetch-suggestions="querySearch"
       ></el-autocomplete>
     </el-col>
-    <el-col :span="6">
+    <el-col :span="3">
       <el-select
         :value="activeDb"
         :disabled="disRefresh"
@@ -30,7 +30,7 @@
         </el-option>
       </el-select>
     </el-col>
-    <el-col :span="12">
+    <el-col :span="16">
       <div class="float-right">
         <el-button-group>
           <el-button
