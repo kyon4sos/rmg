@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data" stripe style="width: 100%" border>
+  <el-table :data="data"  style="width: 100%" border>
     <el-table-column
       :type="c.type"
       :prop="c.prop"

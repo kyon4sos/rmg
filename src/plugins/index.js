@@ -1,5 +1,6 @@
 import Vue from "vue";
 import {
+  ColorPicker,
   ButtonGroup,
   Button,
   Container,
@@ -38,6 +39,7 @@ Vue.prototype.$message = Message;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$confirm = MessageBox.confirm;
 const components = [
+  ColorPicker,
   Popover,
   dropdown,
   DropdownMenu,

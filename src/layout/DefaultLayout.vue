@@ -33,11 +33,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
-    // background-color: black;
   }
   .el-main {
     min-width: 600px;
+    background-color: var(--mainColor);
   }
   .el-aside {
     height: 100vh;

@@ -22,11 +22,18 @@ export default {
 </script>
 
 <style>
+.el-header {
+  background-color: var(--mainColor);
+}
 .dragable {
   height: 100%;
   flex: 1 1 0;
   user-select: none;
   -webkit-app-region: drag;
+}
+.app-ops {
+  display: flex;
+  align-items: center;
 }
 .icon {
   font-size: 10px;

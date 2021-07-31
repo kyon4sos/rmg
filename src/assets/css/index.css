@@ -23,6 +23,7 @@ li {
   --dangerColor: #ff2429;
   --successColor: #28c129;
   --hoverBgColor: #b6b6b6;
+  --mainColor: #282a36;
 }
 
 ::-webkit-scrollbar {
@@ -45,4 +46,15 @@ li {
 
 .min-width {
   min-width: 630px;
+}
+
+.el-input.is-disabled .el-input__inner,
+.el-input__inner,
+.el-input-group__append,
+.el-input-group__prepend,
+.el-table th,
+.el-table tr,
+.el-table--striped .el-table__body tr.el-table__row--striped td,
+.el-table__empty-block {
+  background: var(--mainColor);
 }
