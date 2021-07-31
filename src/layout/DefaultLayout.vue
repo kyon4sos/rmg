@@ -6,7 +6,7 @@
       </el-aside>
       <el-container direction="vertical">
         <AppHeader />
-        <el-main>
+        <el-main v-loading="loading">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -17,10 +17,16 @@
 <script>
 import Server from "@/components/server";
 import AppHeader from "@/components/app-header/AppHeader.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     Server,
     AppHeader,
+  },
+  computed: {
+    ...mapState({
+      loading: (state) => state.redis.loading,
+    }),
   },
   methods: {},
 };

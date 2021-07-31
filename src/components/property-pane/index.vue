@@ -1,5 +1,5 @@
 <template>
-  <el-row class="property-pane mb-8">
+  <el-row class="mb-8 property-pane">
     <el-col :span="24" class="min-width">
       <n-table
         :data="tableData"
@@ -11,18 +11,11 @@
             <el-tooltip placement="top" content="编辑">
               <el-button
                 size="mini"
+                type="primary"
                 icon="el-icon-edit"
                 @click="handleValEdit(scope.$index, scope.row)"
               ></el-button>
             </el-tooltip>
-            <!-- <el-tooltip placement="top" content="保存">
-              <el-button
-                size="mini"
-                type="primary"
-                icon="el-icon-document-checked"
-                @click="handleValDelete(scope.$index, scope.row)"
-              ></el-button>
-            </el-tooltip> -->
             <el-tooltip placement="top" content="删除">
               <el-button
                 size="mini"

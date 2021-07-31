@@ -22,6 +22,7 @@ import {
   GET_KEY,
   INIT_REDIS,
   RENAME_KEY,
+  SET_LOADING,
 } from "../types";
 import {
   getAllKeys,
@@ -91,6 +92,9 @@ const mutations = {
     state.value = "";
     state.editorVal = { value: "" };
   },
+  [SET_LOADING](state, f) {
+    state.loading = f;
+  },
 };
 const actions = {
   async [CREATE_KEY]({ dispatch, state }) {
@@ -99,7 +103,8 @@ const actions = {
     dispatch("Message", res);
     dispatch(GET_KEY, curKey);
   },
-  async [GET_VALUE]({ commit }, key) {
+  async [GET_VALUE]({ commit, state }, key) {
+    commit(SET_LOADING, true);
     const { type, value } = await getValue(key);
     commit(SET_VALUE, value);
     commit(SET_VALUETYPE, type);
@@ -113,58 +118,69 @@ const actions = {
         commit(SET_EDITOR_VALUE, { value: "" });
         break;
     }
+    setTimeout(() => {
+      commit(SET_LOADING, false);
+    }, 400);
   },
   async [GET_ALL_KEYS]({ state, commit }) {
     if (state.redis == null) {
       return;
     }
+    commit(SET_LOADING, true);
     const res = await getAllKeys("*");
     commit(SET_KEYS, res);
+    commit(SET_LOADING, false);
   },
-  async [RENAME_KEY]({ state, dispatch }, newKey) {
+  async [RENAME_KEY]({ state, dispatch, commit }, newKey) {
+    commit(SET_LOADING, true);
     try {
       const res = await renameKey(state.curKey, newKey);
       dispatch("message", res);
     } catch (error) {
       console.log(error);
     }
+    commit(SET_LOADING, false);
   },
-  async [UPDATE_VALUE]({ state, dispatch }) {
-    state.loading = true;
+  async [UPDATE_VALUE]({ state, dispatch, commit }) {
+    commit(SET_LOADING, true);
     const { curKey, valueType, editorVal } = state;
     const res = await update(curKey, valueType, editorVal);
     dispatch("message", res);
-    state.loading = false;
+    commit(SET_LOADING, false);
   },
-  async [SET_TTL]({ state, dispatch }, time) {
+  async [SET_TTL]({ state, dispatch, commit }, time) {
+    commit(SET_LOADING, true);
     const res = await expire(state.curKey, time);
     dispatch("message", res);
+    commit(SET_LOADING, false);
   },
-  async [KEY_EXIST]({ dispatch }, key) {
+  async [KEY_EXIST]({ dispatch, commit }, key) {
+    commit(SET_LOADING, true);
     const res = await keyExists(key);
     dispatch("message", res);
+    commit(SET_LOADING, false);
   },
   async [DEL_KEY]({ dispatch, commit, state }) {
-    this.loading = true;
+    commit(SET_LOADING, true);
     const res = await delKey(state.curKey);
     dispatch("message", res);
     commit(SET_CLEAR);
-    state.loading = false;
+    commit(SET_LOADING, false);
   },
-  async [GET_KEY]({ dispatch, state }) {
-    this.loading = true;
+  async [GET_KEY]({ dispatch, state, commit }) {
+    commit(SET_LOADING, true);
     const res = await keys(state.curKey);
     dispatch("message", res);
-    state.loading = false;
+    commit(SET_LOADING, false);
   },
 
-  async [SELECT_DB]({ commit, dispatch, state }, db) {
-    this.loading = true;
+  async [SELECT_DB]({ commit, dispatch }, db) {
+    commit(SET_LOADING, true);
     const res = await selectDb(db);
     dispatch(GET_ALL_KEYS);
     commit(SET_ACTIVE_DB, db);
     dispatch("message", res);
-    state.loading = false;
+    commit(SET_LOADING, false);
   },
   message({ commit }, res) {
     Message.closeAll();

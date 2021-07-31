@@ -8,9 +8,11 @@
 <script>
 import ToolBar from "@/components/tool-bar";
 import RedisData from "@/components/redis-data";
+
 export default {
   name: "Home",
   components: { ToolBar, RedisData },
+
   methods: {},
 };
 </script>

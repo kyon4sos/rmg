@@ -21,6 +21,7 @@ export const GET_CONFIG = "GET_CONFIG";
 export const GET_KEY = "GET_KEY";
 export const EDIT_SERVERS = "EDIT_SERVERS";
 export const UPDATE_VALUE = "UPDATE_VALUE";
+export const SET_LOADING = "SET_LOADING";
 
 export const DEL_SERVERS = "DEL_SERVERS";
 export const DEL_CONFIG = "DEL_CONFIG";

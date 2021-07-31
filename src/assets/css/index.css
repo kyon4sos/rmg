@@ -81,3 +81,6 @@ li {
 .el-table::before {
   background-color: var(--borderColor);
 }
+.el-loading-mask {
+  background-color: rgb(39 39 39 / 90%);
+}
