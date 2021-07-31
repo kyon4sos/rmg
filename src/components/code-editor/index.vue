@@ -103,14 +103,9 @@ export default {
       }
     },
     handleCmCodeChange(value) {
-      if (!this.tmp) {
-        this.tmp = { ...this.editorVal };
-      }
       this.SET_EDITOR_VALUE({ value });
-      console.log(this.tmp);
     },
     handleCmBlur(val) {
-      // console.log(val);
       if (!this.redis) {
         return;
       }

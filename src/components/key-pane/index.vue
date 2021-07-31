@@ -42,7 +42,7 @@ export default {
 .key-container {
   width: 240px;
   height: 100%;
-  border-right: 1px solid #c7c7c7;
+  border-right: 1px solid var(--borderColor);
   .key-item {
     padding: 4px 8px;
   }

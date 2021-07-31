@@ -24,6 +24,7 @@ li {
   --successColor: #28c129;
   --hoverBgColor: #b6b6b6;
   --mainColor: #282a36;
+  --borderColor: #454547;
 }
 
 ::-webkit-scrollbar {
@@ -57,4 +58,26 @@ li {
 .el-table--striped .el-table__body tr.el-table__row--striped td,
 .el-table__empty-block {
   background: var(--mainColor);
+}
+.el-input.is-disabled .el-input__inner,
+.el-input__inner,
+.el-input-group__append,
+.el-input-group__prepend,
+.el-table th,
+.el-table tr,
+.el-table--striped .el-table__body tr.el-table__row--striped td,
+.el-table__empty-block,
+.el-table--border,
+.el-table--group,
+.el-table--border td,
+.el-table--border th,
+.el-table__body-wrapper .el-table--border.is-scrolling-left ~ .el-table__fixed,
+.el-table td,
+.el-table th.is-leaf {
+  border-color: var(--borderColor);
+}
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  background-color: var(--borderColor);
 }

@@ -18,7 +18,9 @@ export default {
   width: 100%;
   position: relative;
   height: calc(100vh - 76px - 40px);
-  border: 1px solid #c7c7c7;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--borderColor);
   border-radius: 6px;
   overflow: hidden;
 }

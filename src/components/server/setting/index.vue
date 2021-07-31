@@ -21,6 +21,18 @@
           >
           </el-color-picker>
         </div>
+        <div class="setting-item">
+          <span>边框色</span>
+          <el-color-picker
+            v-model="color"
+            show-alpha
+            size="small"
+            :predefine="predefineColors"
+            @active-change="handleActChgBrdColor"
+            @change="handleChangeBrdColor"
+          >
+          </el-color-picker>
+        </div>
       </div>
     </n-drawer>
   </div>
@@ -51,12 +63,20 @@ export default {
     };
   },
   methods: {
+    handleChange() {},
     handleActiveChange(color) {
       console.log(color);
       const ele = document.documentElement;
       ele.style.setProperty("--mainColor", color);
     },
-    handleChange() {},
+    handleActChgBrdColor(color) {
+      const ele = document.documentElement;
+      ele.style.setProperty("--borderColor", color);
+    },
+    handleChangeBrdColor(color) {
+      const ele = document.documentElement;
+      ele.style.setProperty("--borderColor", color);
+    },
   },
 };
 </script>
