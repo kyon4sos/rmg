@@ -43,6 +43,7 @@ export default {
   width: 240px;
   height: 100%;
   border-right: 1px solid var(--borderColor);
+  overflow: auto;
   .key-item {
     padding: 4px 8px;
   }
